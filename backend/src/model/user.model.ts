@@ -1,0 +1,36 @@
+import mongoose, {type Document} from "mongoose";
+
+
+interface IUser extends Document {
+    clerkId: string;
+    name: string;
+    email: string;
+    avatar?: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const UsersSchema = new  mongoose.Schema<IUser>({
+    clerkId: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+        trim : true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+    },
+    avatar: {
+        type: String,
+    },
+}, { timestamps: true });
+
+export const User = mongoose.model("User", UsersSchema);
