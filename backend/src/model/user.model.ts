@@ -30,6 +30,7 @@ const UsersSchema = new  mongoose.Schema<IUser>({
     },
     avatar: {
         type: String,
+        default: ""
     },
 }, { timestamps: true });
 
