@@ -21,7 +21,7 @@ const ChatSchema = new mongoose.Schema<IChat>({
     },
     lastMessageAt: {
         type: Date,
-        default :  Date.now  
+        default : null 
     }
 }, { timestamps: true });
 

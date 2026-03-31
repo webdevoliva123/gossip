@@ -5,7 +5,7 @@ interface IUser extends Document {
     clerkId: string;
     name: string;
     email: string;
-    avatar?: string;
+    avatar: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -19,7 +19,6 @@ const UsersSchema = new  mongoose.Schema<IUser>({
     name: {
         type: String,
         required: true,
-        unique: true,
         trim : true
     },
     email: {
@@ -30,6 +29,7 @@ const UsersSchema = new  mongoose.Schema<IUser>({
     },
     avatar: {
         type: String,
+        default: ""
     },
 }, { timestamps: true });
 

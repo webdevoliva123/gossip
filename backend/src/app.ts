@@ -1,12 +1,21 @@
 import express from "express";
+import { clerkMiddleware } from '@clerk/express'
 import { authRoutes } from "./routes/auth.routes";
 import { userRoutes } from "./routes/user.routes";
 import { chatsRoutes } from "./routes/chats.routes";
 import { messageRoutes } from "./routes/message.routes";
 const app = express();
 
+if (!process.env.CLERK_SECRET_KEY || !process.env.CLERK_PUBLISHABLE_KEY) {
+    throw new Error('CLERK_SECRET_KEY and CLERK_PUBLISHABLE_KEY must be defined in the environment variables');
+}
+
 // middlewares
 app.use(express.json());
+app.use(clerkMiddleware({
+    secretKey: process.env.CLERK_SECRET_KEY!,   
+    publishableKey: process.env.CLERK_PUBLISHABLE_KEY!,
+}));
 
 
 app.get("/", (req, res) => {
