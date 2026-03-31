@@ -1,5 +1,5 @@
 import { Router } from "express"
+const router = Router();
 
 
-
-export const messageRoutes = Router();
+export const messageRoutes =  router;
