@@ -1,16 +1,15 @@
-import type { Response } from "express";
-interface IError {
-    res: Response
+interface IApiResponse<TData = unknown, TError = unknown> {
     type: "success" | "error" | "failed";
     statusCode?: number;
     route: string;
     message: string;
-    data?: any;
-    error?: any;
+    data?: TData;
+    error?: TError;
 }
-export const RETURNRS = ({
+
+export const RETURNRS = <TData = unknown, TError = unknown>({
     res, type, statusCode = 200, route, message, data, error
-}: IError) => {
+}: IApiResponse<TData, TError> & { res: any }) => {
     console.log(`[${type.toUpperCase()}] ${route} - ${message}`);
     res.status(statusCode || 200).json({
         type,

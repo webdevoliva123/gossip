@@ -36,13 +36,13 @@ export const getMe = async (req: AuthRequest, res: Response) => {
         })
 
     } catch (error) {
+        console.error("Error in getMe:", error);
         return RETURNRS({
             type: "error",
             res,
             route: req.originalUrl,
             message: "Internal Server Error : An error occurred while fetching user data.",
-            statusCode: 500,
-            error
+            statusCode: 500
         })
     }
 }
@@ -64,10 +64,24 @@ export const authCallback = async (req: Request, res: Response) => {
         if (!user) {
             const clerkUser = await clerkClient.users.getUser(clerkId);
 
+            // Validate email exists
+            if (!clerkUser.emailAddresses || clerkUser.emailAddresses.length === 0 || !clerkUser.emailAddresses[0]?.emailAddress) {
+                return RETURNRS({
+                    type: "failed",
+                    res,
+                    route: req.originalUrl,
+                    message: "Email address not found in Clerk user record.",
+                    statusCode: 400
+                })
+            }
+
+            const email = clerkUser.emailAddresses[0].emailAddress;
+            const name = clerkUser.firstName ? `${clerkUser.firstName} ${clerkUser.lastName || ""}`.trim() : email.split("@")[0];
+
             user = await User.create({
                 clerkId,
-                name : clerkUser.firstName ? `${clerkUser.firstName} ${clerkUser.lastName || ""}`.trim() : clerkUser.emailAddresses[0]?.emailAddress.split("@")[0] ,
-                email : clerkUser.emailAddresses[0]?.emailAddress || "",
+                name,
+                email,
                 avatar : clerkUser.imageUrl || ""
              })
         }
@@ -86,13 +100,13 @@ export const authCallback = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
+        console.error("Error in authCallback:", error);
         return RETURNRS({
             type: "error",
             res,
             route: req.originalUrl,
             message: "Internal Server Error : An error occurred during authentication callback.",
-            statusCode: 500,
-            error
+            statusCode: 500
         })
     }
 }

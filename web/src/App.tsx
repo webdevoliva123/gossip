@@ -1,17 +1,20 @@
 import './App.css'
-import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/react'
+import { SignInButton, SignUpButton, UserButton, useUser } from '@clerk/react'
 
 function App() {
+  const { isSignedIn } = useUser();
+
   return (
     <>
       <header>
-        <Show when="signed-out">
-          <SignInButton mode='modal' />
-          <SignUpButton mode='modal'/>
-        </Show>
-        <Show when="signed-in">
+        {!isSignedIn ? (
+          <>
+            <SignInButton mode='modal' />
+            <SignUpButton mode='modal'/>
+          </>
+        ) : (
           <UserButton />
-        </Show>
+        )}
       </header>
     </>
   )

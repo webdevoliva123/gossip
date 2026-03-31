@@ -2,7 +2,7 @@
   "name": "backend",
   "module": "index.ts",
  "scripts": {
-    "build": "bun install",
+    "build": "bun build index.ts --outfile dist/index.js",
     "start:dev": "bun --env-file=.local.env --watch run index.ts",
     "start:prod": "bun install && bun --env-file=.prod.env run dist/index.js"
   },

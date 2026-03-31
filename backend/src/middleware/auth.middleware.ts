@@ -33,13 +33,13 @@ export const protectedRoute = [
             req.userId = user._id.toString();
             next();
         } catch (error) {
+            console.error("Error in protectedRoute middleware:", error);
             return RETURNRS({
                 type: "error",
                 res,
                 route: req.originalUrl,
                 message: "Internal Server Error : An error occurred during authentication.",
-                statusCode: 500,
-                error
+                statusCode: 500
             })
         }
     }

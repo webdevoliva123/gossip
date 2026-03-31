@@ -1,5 +1,4 @@
-import { Router } from "express"
-const router = Router();
-
-
-export const messageRoutes =  router;
+export const messageHandler = (req: Request) => {
+  // TODO: implement message routes
+  return new Response("Message routes not implemented", { status: 501 });
+};
