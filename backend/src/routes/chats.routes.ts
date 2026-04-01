@@ -1,4 +1,12 @@
-export const chatsHandler = (req: Request) => {
-  // TODO: implement chat routes
-  return new Response("Chats routes not implemented", { status: 501 });
-};
+import { Router } from "express";
+import { protectedRoute } from "../middleware/auth.middleware";
+import { getChats, getOrCreateChat } from "../controller/chat.controller";
+
+const router = Router();
+router.use(protectedRoute)
+
+router.get("/", getChats)
+router.post("/with/:participantId", getOrCreateChat)
+
+
+export default router

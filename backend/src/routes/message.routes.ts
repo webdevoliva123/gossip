@@ -1,4 +1,11 @@
-export const messageHandler = (req: Request) => {
-  // TODO: implement message routes
-  return new Response("Message routes not implemented", { status: 501 });
-};
+import { Router } from "express";
+import { protectedRoute } from "../middleware/auth.middleware";
+import { getChatMessages } from "../controller/message.controller";
+
+const router = Router();
+
+router.get("/", protectedRoute,getChatMessages)
+
+
+
+export default router

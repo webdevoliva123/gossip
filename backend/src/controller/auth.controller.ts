@@ -36,12 +36,12 @@ export const getMe = async (req: AuthRequest, res: Response) => {
         })
 
     } catch (error) {
-        console.error("Error in getMe:", error);
         return RETURNRS({
             type: "error",
             res,
             route: req.originalUrl,
             message: "Internal Server Error : An error occurred while fetching user data.",
+            error,
             statusCode: 500
         })
     }
@@ -100,12 +100,12 @@ export const authCallback = async (req: Request, res: Response) => {
         })
 
     } catch (error) {
-        console.error("Error in authCallback:", error);
         return RETURNRS({
             type: "error",
             res,
             route: req.originalUrl,
             message: "Internal Server Error : An error occurred during authentication callback.",
+            error,
             statusCode: 500
         })
     }
