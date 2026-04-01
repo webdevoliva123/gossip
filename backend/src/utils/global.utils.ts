@@ -11,6 +11,9 @@ export const RETURNRS = <TData = unknown, TError = unknown>({
     res, type, statusCode = 200, route, message, data, error
 }: IApiResponse<TData, TError> & { res: any }) => {
     console.log(`[${type.toUpperCase()}] ${route} - ${message}`);
+    if (error != null) {
+        console.error({error});
+    }
     res.status(statusCode || 200).json({
         type,
         route,
