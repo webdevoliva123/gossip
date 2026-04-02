@@ -8,4 +8,4 @@ router.get("/", protectedRoute,getChatMessages)
 
 
 
-export default router
+export const messageRoutes = router;
