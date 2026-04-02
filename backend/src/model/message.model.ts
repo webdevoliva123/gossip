@@ -1,9 +1,9 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 
 
 export interface IMessage extends Document  {
-    chat: mongoose.Schema.Types.ObjectId;
-    sender: mongoose.Schema.Types.ObjectId;
+    chat: Types.ObjectId;
+    sender: Types.ObjectId;
     text: string;
     createdAt: Date;
     updatedAt: Date;
@@ -11,12 +11,12 @@ export interface IMessage extends Document  {
 
 const MessageSchema = new  mongoose.Schema<IMessage>({
     chat: {
-        type: mongoose.Schema.Types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref: "Chat",
         required: true
     },
     sender: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
         required: true
     },

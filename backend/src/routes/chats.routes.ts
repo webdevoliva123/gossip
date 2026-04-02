@@ -9,4 +9,4 @@ router.get("/", getChats)
 router.post("/with/:participantId", getOrCreateChat)
 
 
-export default router
+export const chatsRoutes = router;

@@ -5,4 +5,4 @@ const router = Router();
 
 router.get("/users",protectedRoute, getUsers)
 
-export default router
+export const userRoutes = router;
