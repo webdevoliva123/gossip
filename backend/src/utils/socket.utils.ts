@@ -6,9 +6,6 @@ import { Message } from "../model/message.model";
 import { Chat } from "../model/chat.model";
 import mongoose, { Types } from "mongoose";
 
-export interface AuthenticatedSocket extends Socket {
-    userId: string
-}
 
 // this will store the online users in memory, we can use Redis or any other in-memory database for production
 export const onlineUsers: Map<string, string> = new Map() // userId -> socketId
@@ -20,7 +17,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
         "http://localhost:5173", //for VITE
         process.env.FRONTED_URL as string,
         process.env.APP_URL as string
-    ]
+    ].filter(Boolean) as string[] // filter out undefined values and assert as string[]
 
     const io = new SocketServer(httpServer, {
         cors: {
@@ -48,7 +45,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
                 return next(new Error("Authentication error : User not found"))
             }
 
-            (socket as AuthenticatedSocket).userId = user._id.toString() // store the user id in the socket for future use
+            socket.data.userId = user._id.toString() // store the user id in the socket for future use
 
             next()
 
@@ -58,7 +55,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
     })
 
     io.on("connection", (socket) => {
-        const userId = (socket as AuthenticatedSocket).userId
+        const userId = socket.data.userId
 
         //  send the list of currenly online users to the newly connected user
 
@@ -107,7 +104,7 @@ export const initializeSocket = (httpServer: HttpServer) => {
                 chat.lastMessageAt = new Date()
                 await chat.save()
 
-                await message.populate("sender", "name email profilePicture") // populate the sender field with user details
+                await message.populate("sender", "name avatar") // populate the sender field with user details
 
                 io.to(`chat:${chatId}`).emit("new-message", message) // emit the new message to  participants of the chat
 
