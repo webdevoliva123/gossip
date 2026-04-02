@@ -1,4 +1,5 @@
 import express from "express";
+import path from 'path'
 import { clerkMiddleware } from '@clerk/express'
 import { authRoutes } from "./routes/auth.routes";
 import { userRoutes } from "./routes/user.routes";
@@ -26,5 +27,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/chats", chatsRoutes);
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../../web/dist")))
+
+    app.get("/{*}", (_,res) => {
+        res.sendFile(path.join(__dirname, "../../web/dist/index.html"))
+    })
+}
 
 export default app;
