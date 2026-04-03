@@ -8,13 +8,9 @@ import useAuthSocial from '@/hooks/useAuthSocial'
 const { width, height } = Dimensions.get("window")
 
 const AUTH_SCREEN = () => {
-  const {handleSocialAuth, errorStrategy, loadingStrategy} = useAuthSocial()
+  const { handleSocialAuth, loadingStrategy } = useAuthSocial()
+  const isLoading = loadingStrategy !== null
 
-  useEffect(() => {
-    if(errorStrategy?.strategy && errorStrategy?.message) {
-      Alert.alert("Authentication Error", errorStrategy.message)
-    }
-  },[errorStrategy])
 
   return (
     <View className='flex-1 bg-surface-dark'>
@@ -39,25 +35,42 @@ const AUTH_SCREEN = () => {
             <Text className='text-4xl text-accent font-bold  tracking-wider font-mono'>Seamlessly.</Text>
           </View>
           {/* Auth buttons */}
-        <View className='flex-row gap-4 mt-10 '>
-          {/* Pressable Component */}
-          <Pressable className='flex-1 bg-white/95 rounded-2xl py-4 flex-row items-center justify-center gap-2 active:scale-[0.97]' disabled={loadingStrategy !== null} onPress={() => handleSocialAuth("oauth_google")} >
-          { loadingStrategy !== "oauth_google"  ?<Image source={require("../../assets/images/google.png")} style={{
-            width: 20,
-            height: 20,
-            objectFit: "contain"
-          }}  /> : <ActivityIndicator size={"small"} color={"#000"} />}
-          <Text className='text-lg text-gray-700 font-semibold text-foreground'> Google</Text>
-          </Pressable>
+          <View className='flex-row gap-4 mt-10 '>
+            {/* Pressable Component */}
+            <Pressable className='flex-1 bg-white/95 rounded-2xl py-4 flex-row items-center justify-center gap-2 active:scale-[0.97]' 
+            disabled={isLoading} 
+            onPress={() => !isLoading && handleSocialAuth("oauth_google")}
+            accessibilityLabel='Continue With Google'
+            accessibilityRole='button'
+             >
+              {loadingStrategy !== "oauth_google" ? 
+              <Image source={require("../../assets/images/google.png")} style={{
+                width: 20,
+                height: 20,
+                objectFit: "contain"
+              }} /> 
+              : 
+              <ActivityIndicator size={"small"} color={"#000"} />}
+              <Text className='text-lg text-gray-700 font-semibold text-foreground'> Google</Text>
+            </Pressable>
 
-          <Pressable className='flex-1 bg-white/10 border border-white/20 rounded-2xl py-4 flex-row items-center justify-center gap-2 active:scale-[0.97]' disabled={loadingStrategy !== null} onPress={() => handleSocialAuth("oauth_apple")} >
-          { loadingStrategy !== "oauth_apple"  ?<Ionicons name='logo-apple' size={24} color={"#fff"} /> : <ActivityIndicator size="small" color="#fff" />}
-            <Text className='text-lg text-foreground font-semibold text-foreground'> Apple</Text>
-          </Pressable>
-        </View>
+            <Pressable 
+            className='flex-1 bg-white/10 border border-white/20 rounded-2xl py-4 flex-row items-center justify-center gap-2 active:scale-[0.97]' 
+            disabled={isLoading} 
+            onPress={() => !isLoading && handleSocialAuth("oauth_apple")} 
+            accessibilityLabel='Continue With Apple'
+            accessibilityRole='button'
+            >
+              {loadingStrategy !== "oauth_apple" ? 
+              <Ionicons name='logo-apple' size={24} color={"#fff"} /> 
+              : 
+              <ActivityIndicator size="small" color="#fff" />}
+              <Text className='text-lg text-foreground font-semibold text-foreground'> Apple</Text>
+            </Pressable>
+          </View>
         </View>
 
-        
+
       </SafeAreaView>
     </View>
   )
