@@ -1,10 +1,10 @@
+import { clerkMiddleware } from '@clerk/express';
 import express from "express";
-import path from 'path'
-import { clerkMiddleware } from '@clerk/express'
+import path from 'path';
 import { authRoutes } from "./routes/auth.routes";
-import { userRoutes } from "./routes/user.routes";
-import { messageRoutes } from "./routes/message.routes";
 import { chatsRoutes } from "./routes/chats.routes";
+import { messageRoutes } from "./routes/message.routes";
+import { userRoutes } from "./routes/user.routes";
 const app = express();
 
 if (!process.env.CLERK_SECRET_KEY || !process.env.CLERK_PUBLISHABLE_KEY) {
