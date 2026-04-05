@@ -1,11 +1,12 @@
 import { Stack } from "expo-router";
-import "../global.css"
-
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import "../global.css";
+import { ClerkProvider } from '@clerk/expo';
+import { tokenCache } from '@clerk/expo/token-cache';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { ClerkProvider } from '@clerk/expo'
-import { tokenCache } from '@clerk/expo/token-cache'
-import { Slot } from 'expo-router'
+import { StatusBar } from "expo-status-bar";
+import AuthSync from "@/components/AuthSync";
+
 
 
 const queryClient = new QueryClient();
@@ -18,20 +19,22 @@ if (!publishableKey) {
 export default function RootLayout() {
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-    <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider>
-        <Stack screenOptions={{
-        headerShown: false,
-        contentStyle : {
-          backgroundColor : "#18181B"
-        },
-        animation : "fade"
-      }}  initialRouteName="(auth)">
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen name="(tabs)" />
-      </Stack>
-      </SafeAreaProvider>
-    </QueryClientProvider>
+      <AuthSync />
+      <StatusBar style="light"/>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaProvider>
+          <Stack screenOptions={{
+            headerShown: false,
+            contentStyle: {
+              backgroundColor: "#18181B"
+            },
+            animation: "fade"
+          }} initialRouteName="(auth)">
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </SafeAreaProvider>
+      </QueryClientProvider>
     </ClerkProvider>
   );
 }

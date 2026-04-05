@@ -7,7 +7,6 @@ import { Chat } from "../model/chat.model";
 export const getChats = async (req: AuthRequest, res: Response) => {
     try {
         const userId = req.userId;
-
         const chats = await Chat.find({ participants: userId })
         .populate("participants", "name email avatar")
         .populate("lastMessage")
