@@ -1,9 +1,12 @@
-import { ActivityIndicator, Alert, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Image } from 'expo-image'
-import { Ionicons } from '@expo/vector-icons'
+import { AnimatedOrb } from '@/components/AnimatedOrb'
 import useAuthSocial from '@/hooks/useAuthSocial'
+import { Ionicons } from '@expo/vector-icons'
+import { BlurView } from "expo-blur"
+import { Image } from 'expo-image'
+import { LinearGradient } from 'expo-linear-gradient'
+import React from 'react'
+import { ActivityIndicator, Dimensions, Pressable, Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const { width, height } = Dimensions.get("window")
 
@@ -15,7 +18,49 @@ const AUTH_SCREEN = () => {
   return (
     <View className='flex-1 bg-surface-dark'>
       {/* animated */}
-      <View className='absolute inset-0 overflow-hidden'></View>
+      <View className="absolute inset-0 overflow-hidden">
+        <LinearGradient
+          colors={["#0D0D0F", "#1A1A2E", "#16213E", "#0D0D0F"]}
+          style={{ position: "absolute", width: "100%", height: "100%" }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        />
+
+        <AnimatedOrb
+          colors={["#3E7A68", "#1F3F36"]}
+          size={300}
+          initialX={-80}
+          initialY={height * 0.1}
+          duration={4000}
+        />
+        <AnimatedOrb
+          colors={["#1F3F36", "#2e564b"]}
+          size={250}
+          initialX={width - 100}
+          initialY={height * 0.3}
+          duration={5000}
+        />
+        <AnimatedOrb
+          colors={["#224138", "#114436"]}
+          size={200}
+          initialX={width * 0.3}
+          initialY={height * 0.6}
+          duration={3500}
+        />
+        <AnimatedOrb
+          colors={["#3E7A68", "#3E7A68"]}
+          size={180}
+          initialX={-50}
+          initialY={height * 0.75}
+          duration={4500}
+        />
+
+        <BlurView
+          intensity={70}
+          tint="dark"
+          style={{ position: "absolute", width: "100%", height: "100%" }}
+        />
+      </View>
       {/* Safeare View */}
       <SafeAreaView className='flex-1'>
         {/* Top Section - Branding */}

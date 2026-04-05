@@ -27,7 +27,7 @@ const BottomTabLayout = () => {
                 paddingBottom : 20,
                 paddingTop : 10
             },
-            tabBarActiveTintColor :"#D4A24C",
+            tabBarActiveTintColor :"#3E7A68",
             tabBarInactiveTintColor : "#F5F5F5",
             tabBarLabelStyle : {
                 fontSize : 12,

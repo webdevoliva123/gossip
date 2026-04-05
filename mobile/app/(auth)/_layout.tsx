@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { Redirect, Stack } from 'expo-router'
 import { useAuth } from '@clerk/expo'
+import { Redirect, Stack } from 'expo-router'
+import React from 'react'
+import { StyleSheet } from 'react-native'
 
 const AUTH_LAYOUT = () => {
     const { isSignedIn, isLoaded } = useAuth()
