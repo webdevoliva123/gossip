@@ -1,12 +1,11 @@
 import { Stack } from "expo-router";
 import "../global.css";
-
-import AuthSync from "@/component/AuthSync";
 import { ClerkProvider } from '@clerk/expo';
 import { tokenCache } from '@clerk/expo/token-cache';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import AuthSync from "@/components/AuthSync";
 
 
 

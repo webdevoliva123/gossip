@@ -22,16 +22,18 @@ interface ApiRequest<T = unknown> {
     headers?: Record<string, string>
 }
 
-const useApi = (): {
+const useApi = <T= unknown> (): {
     callApi: (obj: ApiRequest) => Promise<void>,
     loading: boolean,
     message?: string | null,
-    error?: unknown | null,
+    error?: T | null,
+    resData?: T | null,
 } => {
     const { getToken } = useAuth()
     const [loading, setLoading] = useState<boolean>(false)
     const [message, setMessage] = useState<string | null>(null)
-    const [error, setError] = useState<unknown>(null)
+    const [resData,setResData] = useState<T | null>(null)
+    const [error, setError] = useState<T | null>(null)
     const [internalError, setInternalError] = useState<boolean>(false)
 
 
@@ -82,7 +84,7 @@ const useApi = (): {
         query,
         headers,
         contentType,
-    }: ApiRequest) => {
+    }: ApiRequest)  => {
         setLoading(true)
         setInternalError(false)
         setError(null)
@@ -110,8 +112,7 @@ const useApi = (): {
             console.log(`🚀 Api Called Successfully - ${apiUrl} : ${Date.now()}`)
             setMessage(res.data?.message || null)
             setError(res.data?.error || null)
-            return res.data?.data
-
+            setResData(res.data?.data || null)
         } catch (err) {
             console.log({ err })
             setInternalError(true)
@@ -124,7 +125,7 @@ const useApi = (): {
     }
 
 
-    return { callApi, loading, message, error }
+    return { callApi, resData, loading, message, error }
 }
 
 export default useApi

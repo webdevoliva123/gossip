@@ -5,6 +5,7 @@ export interface UserDType {
     email: string,
 }
 
+
 export interface MessageDType {
     _id: string;
     chat: string;
