@@ -32,6 +32,12 @@ export default function RootLayout() {
           }} initialRouteName="(auth)">
             <Stack.Screen name="(auth)" />
             <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="new-chat" options={{
+              animation : "slide_from_bottom",
+              presentation : "modal",
+              gestureEnabled : true,
+            }}/>
+            <Stack.Screen name="chat/[id]" />
           </Stack>
         </SafeAreaProvider>
       </QueryClientProvider>
