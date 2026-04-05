@@ -1,12 +1,13 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-const ChatDetailScreen = () => {
+const CHAT_DETAIL_SCREEN = () => {
   return (
-    <View>
-      <Text>ChatDetailScreen</Text>
-    </View>
+    <SafeAreaView className='flex-1 bg-surface'>
+      <Text>CHAT_DETAIL_SCREEN</Text>
+    </SafeAreaView>
   )
 }
 
-export default ChatDetailScreen
+export default CHAT_DETAIL_SCREEN

@@ -3,7 +3,7 @@ import {Ionicons} from "@expo/vector-icons"
 import { useAuth } from "@clerk/expo";
 
 
-const BottomTabLayout = () => {
+const BOTTOM_TAB_LAYOUT = () => {
 
       const { isSignedIn, isLoaded } = useAuth()
     
@@ -50,4 +50,4 @@ const BottomTabLayout = () => {
     );
 }
 
-export default BottomTabLayout;
+export default BOTTOM_TAB_LAYOUT;

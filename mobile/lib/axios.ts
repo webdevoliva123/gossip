@@ -23,7 +23,7 @@ interface ApiRequest<T = unknown> {
 }
 
 const useApi = <T= unknown> (): {
-    callApi: (obj: ApiRequest) => Promise<void>,
+    callApi:  (obj: ApiRequest) => Promise<T | undefined>,
     loading: boolean,
     message?: string | null,
     error?: T | null,
@@ -84,7 +84,7 @@ const useApi = <T= unknown> (): {
         query,
         headers,
         contentType,
-    }: ApiRequest)  => {
+    }: ApiRequest) : Promise<T | undefined>  => {
         setLoading(true)
         setInternalError(false)
         setError(null)
@@ -113,6 +113,7 @@ const useApi = <T= unknown> (): {
             setMessage(res.data?.message || null)
             setError(res.data?.error || null)
             setResData(res.data?.data || null)
+            return res.data?.data as T 
         } catch (err) {
             console.log({ err })
             setInternalError(true)
